@@ -1,7 +1,5 @@
 import java.util.Random;
-import java.time.Duration;
 import java.util.Arrays;
-import java.time.Instant;
 
 public class NaiveSearch
 {
