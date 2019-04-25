@@ -8,11 +8,11 @@ public:
 	T value;
     Node<T>* next;
     Node(){
-		next = nullptr; 
+		next = NULL; 
 	}
 	Node(T v){
 		value=v;
-		next=nullptr;
+		next=NULL;
 	}
     
 };
@@ -20,7 +20,7 @@ template<class T>
 void printNormal(Node<T>* node)
 {
     Node<T>* temp = node;
-    while(temp != nullptr)
+    while(temp != NULL)
     {
         cout<< temp->value << " ";
         temp = temp->next;
@@ -30,7 +30,7 @@ void printNormal(Node<T>* node)
 template<class T>
 void recursivePrint(Node<T>* node)
 {
-    if(node == nullptr)
+    if(node == NULL)
         return; 
     else
     {
@@ -47,12 +47,12 @@ protected:
 public:
     LinkedList()
     {
-        root = nullptr;
+        root = NULL;
     }
 
     void add(Node<T>* node)
     {
-        if(root == nullptr)
+        if(root == NULL)
             root = node;
         else
         {
@@ -63,7 +63,7 @@ public:
 	
 	void add(T value)
     {
-        if(root == nullptr)
+        if(root == NULL)
             root = new Node<T>(value);
         else
         {
@@ -71,9 +71,12 @@ public:
             temp->next = new Node<T>(value);
         }
     }
-	
 	void insert(T value, int position){
 		Node<T>* toAdd=new Node<T>(value);
+		toAdd->next=NULL;
+		insert(toAdd, position);
+	}
+	void insert(Node<T>* toAdd, int position){
 		Node<T>* temp=root;
 		if(position==0){
 			toAdd->next=temp;
@@ -81,7 +84,7 @@ public:
 			return;
 		}
 		for(int i=0; i<position-1; i++){
-			if(temp->next==nullptr){
+			if(temp->next==NULL){
 				break;
 			}else{
 				temp=temp->next;
@@ -92,6 +95,25 @@ public:
 		
 	}
 
+	void remove(int position){
+			Node<T>* temp=root;
+			Node<T>* toDel;
+			if(position==0){
+				root=temp->next;
+			}else{
+				for(int i=0; i<position-1; i++){
+					if(temp->next==NULL){
+						return;
+					}else{
+						temp=temp->next;
+					}
+				}
+			}
+			toDel=temp->next;
+			temp->next=temp->next->next;
+			free(toDel);
+	}
+		
     Node<T>* traverse(Node<T>* node)
     {
         if(node->next == nullptr)
@@ -99,6 +121,8 @@ public:
         else
             return traverse(node->next);
     }
+	
+	
 	
 	void printList(){
 		recursivePrint(root);
@@ -124,6 +148,9 @@ int main()
 	l.printList();
 	cout<<endl;
 	l.insert(6, 10000);
+	l.printList();
+	cout<<endl;
+	l.remove(3);
 	l.printList();
 	cout<<endl;
     return 0;
